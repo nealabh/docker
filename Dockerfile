@@ -13,8 +13,8 @@ RUN  dpkg-divert --local --rename --add /sbin/initctl
 ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
-#RUN apt-get -y update
-#RUN apt-get -y install ca-certificates openssh-server supervisor rpl pwgen
+RUN apt-get -y update
+RUN apt-get -y install ca-certificates openssh-server supervisor rpl pwgen
 RUN mkdir /var/run/sshd
 ADD sshd.conf /etc/supervisor/conf.d/sshd.conf
 
@@ -23,12 +23,12 @@ ADD sshd.conf /etc/supervisor/conf.d/sshd.conf
 # up your key. NOTE: This is not a particularly robust setup 
 # security wise and we recommend to NOT expose ssh as a public
 # service.
-#RUN sed "PermitRootLogin without-password" "PermitRootLogin yes" /etc/ssh/sshd_config
+RUN rpl "PermitRootLogin without-password" "PermitRootLogin yes" /etc/ssh/sshd_config
 RUN mkdir /root/.ssh
 RUN chmod o-rwx /root/.ssh
 
 #-------------Application Specific Stuff ----------------------------------------------------
-RUN yum install -y install nginx uwsgi uwsgi-plugin-python git python-virtualenv vim python-dev
+RUN atp-get install -y install libpython-dev python2.7-dev nginx uwsgi uwsgi-plugin-python git python-virtualenv vim python-dev
 RUN mkdir /home/web
 ADD server-conf /home/web/server-conf
 # Note that ww-data does not have permissions
