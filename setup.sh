@@ -22,3 +22,4 @@ echo "daemon off;" >> /etc/nginx/nginx.conf
 cd /home/web
 virtualenv venv
 venv/bin/pip install -r REQUIREMENTS.txt
+
